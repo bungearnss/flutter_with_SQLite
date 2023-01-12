@@ -32,9 +32,6 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
       _descriptionController.text = widget.product!.description;
 
       _updateState();
-
-      print("#####product: ${widget.product!.product}");
-      print("#####con: ${_productController.text}");
     }
   }
 
