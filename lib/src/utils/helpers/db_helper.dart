@@ -69,4 +69,10 @@ class DBHelper {
 
     return await _db?.query(tableName) ?? [];
   }
+
+  Future<int?> addData(Map<String, dynamic> productMap) async {
+    await initDB();
+
+    return await _db?.insert(tableName, productMap);
+  }
 }

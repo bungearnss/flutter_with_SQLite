@@ -22,4 +22,8 @@ class ProductService {
 
     return products;
   }
+
+  Future<int?> addProduct(Product product) async {
+    return await _dbHelper.addData(product.toMap());
+  }
 }

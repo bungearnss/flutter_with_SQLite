@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../services/product_service.dart';
 import './view_product_screen.dart';
+import './add_edit_product_screen.dart';
 
 class AllProductScreen extends StatefulWidget {
   const AllProductScreen({super.key});
@@ -29,6 +30,12 @@ class _AllProductScreenState extends State<AllProductScreen> {
   void initState() {
     super.initState();
     _getAllProducts();
+  }
+
+  _showSuceessSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
   @override
@@ -78,7 +85,17 @@ class _AllProductScreenState extends State<AllProductScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AddEditProductScreen())).then((data) {
+            if (data != null) {
+              _getAllProducts();
+              _showSuceessSnackBar("Product added successfully");
+            }
+          });
+        },
         child: const Icon(Icons.add),
       ),
     );
