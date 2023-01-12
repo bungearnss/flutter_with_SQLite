@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/product.dart';
 import '../services/product_service.dart';
+import './view_product_screen.dart';
 
 class AllProductScreen extends StatefulWidget {
   const AllProductScreen({super.key});
@@ -41,7 +42,15 @@ class _AllProductScreenState extends State<AllProductScreen> {
         itemBuilder: (context, index) {
           return Card(
             child: ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: ((context) =>
+                        ViewProductScreen(product: _productList[index])),
+                  ),
+                );
+              },
               leading: CircleAvatar(
                 backgroundImage:
                     AssetImage("assets/images/${_productList[index].image}"),
