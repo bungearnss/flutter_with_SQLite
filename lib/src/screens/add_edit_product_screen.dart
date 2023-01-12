@@ -25,6 +25,17 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.product != null) {
+      _productController.text = widget.product!.product;
+      _imageController.text = widget.product!.image;
+      _descriptionController.text = widget.product!.description;
+
+      _updateState();
+
+      print("#####product: ${widget.product!.product}");
+      print("#####con: ${_productController.text}");
+    }
   }
 
   void _updateState() {
@@ -39,7 +50,9 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add Product to Catalog"),
+        title: widget.product == null
+            ? const Text("Add Product to Catalog")
+            : const Text("Edit Product in Catalog"),
       ),
       body: Container(
         padding: const EdgeInsets.all(16),
@@ -99,8 +112,16 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                           _descriptionController.text,
                         );
 
-                        Future<int?> result =
-                            _productService.addProduct(product);
+                        // Future<int?> result =
+                        //     _productService.addProduct(product);
+
+                        Future<int?> result;
+                        if (widget.product == null) {
+                          result = _productService.addProduct(product);
+                        } else {
+                          product.id = widget.product?.id;
+                          result = _productService.updateProduct(product);
+                        }
 
                         result.then((value) => Navigator.pop(context, result));
                       }

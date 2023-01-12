@@ -38,6 +38,40 @@ class _AllProductScreenState extends State<AllProductScreen> {
     );
   }
 
+  _deleteDialog(BuildContext context, Product product) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Are you sure to delete?"),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                    onPressed: () async {
+                      var result = await _productService.deleteProduct(product);
+                      if (result != null) {
+                        Navigator.pop(context);
+                        _getAllProducts();
+                        _showSuceessSnackBar("Product deleted successfully");
+                      }
+                    },
+                    child: const Text("Delete"),
+                  ),
+                  OutlinedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("Close"),
+                  )
+                ],
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,11 +102,25 @@ class _AllProductScreenState extends State<AllProductScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => AddEditProductScreen(
+                                    product: _productList[index],
+                                  )))).then((data) {
+                        if (data != null && data > 0) {
+                          _getAllProducts();
+                          _showSuceessSnackBar("Product updated successfully");
+                        }
+                      });
+                    },
                     icon: const Icon(Icons.edit),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _deleteDialog(context, _productList[index]);
+                    },
                     icon: const Icon(
                       Icons.delete,
                       color: Colors.red,
@@ -87,9 +135,10 @@ class _AllProductScreenState extends State<AllProductScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => AddEditProductScreen())).then((data) {
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AddEditProductScreen()))
+              .then((data) {
             if (data != null) {
               _getAllProducts();
               _showSuceessSnackBar("Product added successfully");

@@ -26,4 +26,12 @@ class ProductService {
   Future<int?> addProduct(Product product) async {
     return await _dbHelper.addData(product.toMap());
   }
+
+  Future<int?> deleteProduct(Product product) async {
+    return await _dbHelper.deleteData(product.id!);
+  }
+
+  Future<int?> updateProduct(Product product) async {
+    return await _dbHelper.updateData(product.toMap());
+  }
 }

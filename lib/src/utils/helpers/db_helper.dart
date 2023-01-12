@@ -75,4 +75,17 @@ class DBHelper {
 
     return await _db?.insert(tableName, productMap);
   }
+
+  Future<int?> deleteData(int id) async {
+    await initDB();
+
+    return await _db?.delete(tableName, where: "id = ?", whereArgs: [id]);
+  }
+
+  Future<int?> updateData(Map<String, dynamic> productMap) async {
+    await initDB();
+
+    return await _db?.update(tableName, productMap,
+        where: "id = ?", whereArgs: [productMap['id']]);
+  }
 }
