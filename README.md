@@ -1,6 +1,13 @@
 # flutter_with_sqlite
 
-A new Flutter project.
+App Design
+![flutter_sql_app](https://user-images.githubusercontent.com/66944039/211973183-86a47e01-bd15-4e4e-a508-f907f2b7aec0.png)
+
+## Objectives
+- set up a helper to connect to SQLite
+- retrieve data from the SQLite database
+- add data to the SQLite database
+- delete and update data in the SQLite database
 
 ## Getting Started
 
